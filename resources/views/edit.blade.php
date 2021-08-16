@@ -1,6 +1,20 @@
-<form method="POST" action="/movies/{{$movie->id}}">
+@extends("layouts.page")
+
+@section("content")
+
+<form action="/movies/{{$movie->id}}/delete" method="POST">
     @csrf
-    @method('PATCH')
+    @method('delete')
+    <div class="form-row">
+        <button id="delete" type="submit" class="btn btn-outline-danger">Supprimer le film</button> 
+    </div> 
+</form>
+
+<h1> Modifier un film </h1>
+
+<form method="POST" action="/movies/{{$movie->id}}" enctype="multipart/form-data">
+    @csrf
+    @method('PUT')
     <div class="form-row">
         <div class="col-md-8 mb-3">
             <label for="titre">Titre</label>
@@ -10,17 +24,18 @@
             <label for="categorie">Catégories</label>
             <select id="categorie" name="categorie" class="form-control">
             <option selected>{{$movie->categorie}}</option>
-                @foreach($movies as $movie)
-                    <option value="{{$movie->movie}}">{{$movie->movie}}</option>
+                @foreach($categories as $categorie)
+                    <option value="{{$categorie->categorie}}">{{ $categorie->categorie }}</option>
                 @endforeach
             </select>
         </div>
     </div>
     <div class="form-row">
         <div class="col mb-3">
+            <img width="50" alt="image" src="/myapp/public/images/{{ $movie->image }}" >
             <div class="custom-file">
-                <input type="file" name="image" class="custom-file-input" id="image" required>
-                <label class="custom-file-label" for="image" >Choose file</label>
+                <input accept="image/png, image/jpeg" type="file" name="image" class="custom-file-input" id="image" >
+                <label class="custom-file-label" value="{{ $movie->image }}" for="image" >Choisir une image</label>
             </div>
         </div>
     </div>
@@ -31,4 +46,8 @@
         </div>
     </div>
     <button class="btn btn-primary" type="submit">Modifier</button>
+    <a href="{{ env('APP_ANGULAR_URL') }}">Retour à la liste des films</a>
+    <p><br /></p>
 </form>
+
+@endsection

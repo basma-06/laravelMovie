@@ -13,5 +13,5 @@ class Movie extends Model
 
     protected $fillable=['titre', 'categorie', "description"];
 
-    public $timestamps = false; // Désactive la gestion des colonnes created_at et updated_at
+    public $timestamps = true; // Désactive la gestion des colonnes created_at et updated_at
 }
